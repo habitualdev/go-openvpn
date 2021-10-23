@@ -18,10 +18,11 @@
 package openvpn3
 
 import "sync"
+import "io"
 
 // Logger represents the logger
 type Logger interface {
-	Log(string)
+	Log(text string, wrt io.Writer)
 }
 
 // Event contains all the info relating to the event
@@ -34,7 +35,7 @@ type Event struct {
 
 // EventConsumer represents an event consumer
 type EventConsumer interface {
-	OnEvent(Event)
+	OnEvent(Event Event, wrt io.Writer)
 }
 
 // Statistics shows the bytes in/out for openvpn
@@ -45,7 +46,7 @@ type Statistics struct {
 
 // StatsConsumer consumes the bytes/in out statistics
 type StatsConsumer interface {
-	OnStats(Statistics)
+	OnStats(Statistics Statistics, wrt io.Writer)
 }
 
 type unregister func()
